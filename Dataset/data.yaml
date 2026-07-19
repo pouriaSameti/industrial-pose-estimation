@@ -1,0 +1,16 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+kpt_shape: [2, 3]
+flip_idx: [0, 1]
+
+nc: 2
+names: ['Axis', 'Wire']
+
+roboflow:
+  workspace: imagesegmentpouria
+  project: industrial-pose-estimation
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/imagesegmentpouria/industrial-pose-estimation/dataset/1
