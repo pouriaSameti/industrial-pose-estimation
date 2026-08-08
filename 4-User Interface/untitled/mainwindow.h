@@ -22,6 +22,7 @@ public:
 private slots:
     void updateCamera();
     void connectCamera();
+    void setCameraStatus(bool connected);
 
 private:
     Ui::MainWindow *ui;
@@ -29,6 +30,8 @@ private:
     QString cameraIP;
     QTimer *cameraTimer;
     cv::VideoCapture camera;
+
+    bool cameraConnectionStatus = false;
 };
 
 #endif // MAINWINDOW_H

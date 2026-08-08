@@ -6,15 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>890</width>
-    <height>737</height>
+    <width>891</width>
+    <height>747</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #f2f5f7;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QFrame" name="lab_frame">
+   <widget class="QFrame" name="labFrame">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -22,6 +27,12 @@
       <width>871</width>
       <height>91</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame#labFrame {
+    border: none;
+    border-bottom: 5px solid #34a1eb;
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -87,17 +98,20 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="camera_frame">
+   <widget class="QFrame" name="cameraFrame">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>110</y>
-      <width>871</width>
-      <height>61</height>
+      <width>601</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">QFrame#cameraFrame {
+	background-color: white;
+	border-radius: 8px;
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -109,7 +123,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>0</y>
        <width>91</width>
        <height>41</height>
       </rect>
@@ -117,7 +131,7 @@
      <property name="font">
       <font>
        <pointsize>12</pointsize>
-       <bold>false</bold>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -127,16 +141,16 @@
     <widget class="QLineEdit" name="cameraLineEdit">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>10</y>
-       <width>681</width>
+       <x>10</x>
+       <y>40</y>
+       <width>491</width>
        <height>41</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QLineEdit {
-    border: 1px solid gray;
-    border-radius: 5px;
+    border: 1px solid #34a1eb;
+    border-radius: 8px;
 }</string>
      </property>
      <property name="frame">
@@ -146,25 +160,40 @@
     <widget class="QPushButton" name="connectCameraButton">
      <property name="geometry">
       <rect>
-       <x>790</x>
-       <y>10</y>
+       <x>510</x>
+       <y>40</y>
        <width>75</width>
        <height>41</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#connectCameraButton {
+    background-color: #34a1eb;
+    color: white;
+    border: none;
+	border-radius: 8px;
+	font-weight: bold;
+}</string>
      </property>
      <property name="text">
       <string>Apply</string>
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="real_time_frame">
+   <widget class="QFrame" name="realTimeFrame">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>180</y>
+      <y>220</y>
       <width>871</width>
-      <height>511</height>
+      <height>471</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame#realTimeFrame {
+	background-color: white;
+	border-radius: 8px;
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -178,12 +207,98 @@
        <x>0</x>
        <y>0</y>
        <width>871</width>
-       <height>511</height>
+       <height>471</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="statusFrame">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>110</y>
+      <width>251</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame#statusFrame {
+	background-color: white;
+	border-radius: 8px;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLabel" name="labInfoLabel2_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Connection Status</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="cameraStatusFrame">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>211</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#cameraStatusFrame {
+    border-radius: 20px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="cameraStatusText">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel#cameraStatusText {
+    color: #f03d22;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 10pt;
+    font-weight: 600;
+
+	background-color: #edc6c0;
+    border-radius: 20px;
+}</string>
+      </property>
+      <property name="text">
+       <string> Disconnected</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -192,7 +307,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>890</width>
+     <width>891</width>
      <height>22</height>
     </rect>
    </property>
