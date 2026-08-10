@@ -1,5 +1,9 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+
+#include <QCoreApplication>
+#include <QFile>
+#include <QDebug>
 #include <QDebug>
 #include <QImage>
 #include <QPixmap>
@@ -15,6 +19,27 @@ MainWindow::MainWindow(QWidget *parent)
     cameraTimer = new QTimer(this);
     connect(cameraTimer, &QTimer::timeout, this, &MainWindow::updateCamera);
     connect(ui->connectCameraButton, &QPushButton::clicked, this, &MainWindow::connectCamera);
+
+    QString modelPath = "D:/Computer Vision/Projects/industrial-pose-estimation/4-User Interface/untitled/models/best.onnx";
+    qDebug() << "Model path:" << modelPath;
+
+    if (!QFile::exists(modelPath))
+    {
+        qDebug() << "ERROR: Model file does not exist!";
+    }
+    else
+    {
+        qDebug() << "Model file exists.";
+
+        if (!detector.loadModel(modelPath.toStdString()))
+        {
+            qDebug() << "ERROR: Cannot load YOLO model";
+        }
+        else
+        {
+            qDebug() << "YOLO model loaded successfully";
+        }
+    }
 }
 
 MainWindow::~MainWindow()
@@ -66,6 +91,10 @@ void MainWindow::updateCamera()
         setCameraStatus(false);
         return;
     }
+
+    setCameraStatus(true);
+    std::vector<Detection> detections = detector.detect(frame);
+    detector.drawResults(frame, detections);
 
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
     QImage image(frame.data, frame.cols, frame.rows, static_cast<int>(frame.step), QImage::Format_RGB888);

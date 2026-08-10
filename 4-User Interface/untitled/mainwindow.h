@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <opencv2/opencv.hpp>
+#include "yoloposedetector.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,6 +31,7 @@ private:
     QString cameraIP;
     QTimer *cameraTimer;
     cv::VideoCapture camera;
+    YOLOPoseDetector detector;
 
     bool cameraConnectionStatus = false;
 };
