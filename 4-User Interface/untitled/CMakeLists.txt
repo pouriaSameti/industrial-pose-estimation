@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+        yoloposedetector.cpp
+        yoloposedetector.h
         mainwindow.ui
         resources.qrc
         ${TS_FILES}
@@ -30,6 +32,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(untitled
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        yoloposedetector.h
+        yoloposedetector.cpp
     )
 
 
