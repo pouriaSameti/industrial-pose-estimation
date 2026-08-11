@@ -1,12 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include <QCoreApplication>
 #include <QFile>
-#include <QDebug>
 #include <QDebug>
 #include <QImage>
 #include <QPixmap>
+#include <QMetaObject>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,92 +15,61 @@ MainWindow::MainWindow(QWidget *parent)
     ui->connectCameraButton->setCursor(Qt::PointingHandCursor);
     setCameraStatus(false);
 
-    cameraTimer = new QTimer(this);
-    connect(cameraTimer, &QTimer::timeout, this, &MainWindow::updateCamera);
+    // Create worker thread
+    cameraThread = new QThread(this);
+    cameraWorker = new CameraWorker();
+    cameraWorker->moveToThread(cameraThread);
+
+    // Worker -> GUI
+    connect(cameraWorker, &CameraWorker::frameReady, this, &MainWindow::displayFrame);
+    connect(cameraWorker, &CameraWorker::statusChanged, this, &MainWindow::setCameraStatus);
+    // connect(cameraWorker, &CameraWorker::angleReady, this, &MainWindow::updateAngle);
+
+    // Connect button
     connect(ui->connectCameraButton, &QPushButton::clicked, this, &MainWindow::connectCamera);
 
-    QString modelPath = "D:/Computer Vision/Projects/industrial-pose-estimation/4-User Interface/untitled/models/best.onnx";
-    qDebug() << "Model path:" << modelPath;
-
-    if (!QFile::exists(modelPath))
-    {
-        qDebug() << "ERROR: Model file does not exist!";
-    }
-    else
-    {
-        qDebug() << "Model file exists.";
-
-        if (!detector.loadModel(modelPath.toStdString()))
-        {
-            qDebug() << "ERROR: Cannot load YOLO model";
-        }
-        else
-        {
-            qDebug() << "YOLO model loaded successfully";
-        }
-    }
+    // Start worker thread
+    cameraThread->start();
 }
 
 MainWindow::~MainWindow()
 {
-    if (cameraTimer->isActive())
-        cameraTimer->stop();
+    if (cameraWorker)
+        QMetaObject::invokeMethod(cameraWorker, "stopCamera", Qt::BlockingQueuedConnection);
 
-    if (camera.isOpened())
-        camera.release();
+    if (cameraThread)
+    {
+        cameraThread->quit();
+        cameraThread->wait();
+    }
 
+    delete cameraWorker;
     delete ui;
 }
 
 
 void MainWindow::connectCamera()
 {
-    QString cameraIP = ui->cameraLineEdit->text();
+    QString cameraIP = ui->cameraLineEdit->text().trimmed();
 
-    if(cameraIP.isEmpty()){
+    if (cameraIP.isEmpty())
+    {
         qDebug() << "Camera address is empty";
         setCameraStatus(false);
         return;
     }
 
-    if(camera.isOpened())
-        camera.release();
+    qDebug() << "Connecting to camera:"
+             << cameraIP;
 
 
-    bool opened = camera.open(cameraIP.toStdString());
-
-    if(!opened){
-        setCameraStatus(false);
-        qDebug() << "Cannot open camera:" << cameraIP;
-        return;
-    }
-
-    setCameraStatus(true);
-    qDebug() << "Camera connected:" << cameraIP;
-    cameraTimer->start(30);
+    QMetaObject::invokeMethod(cameraWorker, "startCamera", Qt::QueuedConnection, Q_ARG(QString, cameraIP));
 }
 
-void MainWindow::updateCamera()
+void MainWindow::displayFrame(const QImage &image)
 {
-    cv::Mat frame;
-    camera >> frame;
-
-    if (frame.empty()) {
-        qDebug() << "Empty camera frame";
-        setCameraStatus(false);
-        return;
-    }
-
-    setCameraStatus(true);
-    std::vector<Detection> detections = detector.detect(frame);
-    detector.drawResults(frame, detections);
-
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
-    QImage image(frame.data, frame.cols, frame.rows, static_cast<int>(frame.step), QImage::Format_RGB888);
-    QPixmap pixmap = QPixmap::fromImage(image);
-    ui->cameraLabel->setPixmap(pixmap.scaled(ui->cameraLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    ui->cameraLabel->setPixmap(QPixmap::fromImage(image).scaled(ui->cameraLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
-
 
 void MainWindow::setCameraStatus(bool connected)
 {

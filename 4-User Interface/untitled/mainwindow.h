@@ -1,9 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include <QTimer>
+#include <QThread>
+#include <QMutex>
+#include <QMainWindow>
 #include <opencv2/opencv.hpp>
+#include "camera_worker.h"
 #include "yoloposedetector.h"
 
 QT_BEGIN_NAMESPACE
@@ -21,19 +24,23 @@ public:
     ~MainWindow();
 
 private slots:
-    void updateCamera();
     void connectCamera();
+    void displayFrame(const QImage &image);
+    // void updateAngle(double angle);
     void setCameraStatus(bool connected);
 
 private:
     Ui::MainWindow *ui;
 
+    QThread *cameraThread;
+    CameraWorker *cameraWorker;
+
     QString cameraIP;
     QTimer *cameraTimer;
-    cv::VideoCapture camera;
     YOLOPoseDetector detector;
 
     bool cameraConnectionStatus = false;
 };
+
 
 #endif // MAINWINDOW_H
