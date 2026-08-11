@@ -11,8 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OpenCV_DIR "C:/opencv/build/x64/vc16/lib")
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Concurrent)
 find_package(OpenCV REQUIRED)
 
 set(TS_FILES untitled_en_US.ts)
@@ -21,8 +22,13 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
         mainwindow.h
+
         yoloposedetector.cpp
         yoloposedetector.h
+
+        camera_worker.h
+        camera_worker.cpp
+
         mainwindow.ui
         resources.qrc
         ${TS_FILES}
@@ -34,6 +40,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         yoloposedetector.h
         yoloposedetector.cpp
+        camera_worker.h
+        camera_worker.cpp
     )
 
 
@@ -70,6 +78,7 @@ target_include_directories(untitled PRIVATE
 
 target_link_libraries(untitled PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Concurrent
     ${OpenCV_LIBS}
 )
 
