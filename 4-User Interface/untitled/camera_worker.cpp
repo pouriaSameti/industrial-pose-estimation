@@ -119,7 +119,7 @@ void CameraWorker::onInferenceFinished()
 
     if (wireFound && axisFound)
     {
-        double angle = YOLOPoseDetector::calculateAngle(wire1, wire2, axis1, axis2);
+        double angle = YOLOPoseDetector::calculateSignedAngle(wire1, wire2, axis1, axis2);
         emit angleReady(angle);
     }
 }

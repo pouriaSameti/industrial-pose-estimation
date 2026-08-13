@@ -109,10 +109,13 @@ void MainWindow::setCameraStatus(bool connected)
         ui->cameraStatusText->setText(" Disconnected");
         cameraConnectionStatus = false;
         ui->degreeLabel->setText("0");
+        ui->deviationLabel->setText("None");
     }
 }
 
 void MainWindow::updateAngle(double angle)
 {
-    ui->degreeLabel->setText(QString::number(angle));
+    QString direction = (angle >= 0) ? "Right" : "Left";
+    ui->deviationLabel->setText(direction);
+    ui->degreeLabel->setText(QString::number(std::abs(angle), 'f', 1) + "° " + direction);
 }

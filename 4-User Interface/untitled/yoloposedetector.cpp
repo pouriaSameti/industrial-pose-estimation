@@ -276,9 +276,37 @@ void YOLOPoseDetector::drawResults(
     // Calculate angle
     // --------------------------------------------------
     if (wireFound && axisFound)
-    {
         double angle = calculateAngle(wire1, wire2, axis1, axis2);
-       }
+
+}
+
+
+double YOLOPoseDetector::calculateSignedAngle(
+    const cv::Point2f& p1,
+    const cv::Point2f& p2,
+    const cv::Point2f& p3,
+    const cv::Point2f& p4)
+{
+    cv::Point2f v1 = p2 - p1;
+    cv::Point2f v2 = p4 - p3;
+
+    double norm1 = cv::norm(v1);
+    double norm2 = cv::norm(v2);
+
+    if (norm1 == 0.0 || norm2 == 0.0)
+        return 0.0;
+
+    v1 /= norm1;
+    v2 /= norm2;
+
+    double cosine = std::clamp(static_cast<double>(v1.dot(v2)), -1.0, 1.0);
+    double angle = std::acos(cosine) * 180.0 / CV_PI;
+
+    double cross = v1.x * v2.y - v1.y * v2.x;
+    if (cross < 0)
+        angle = -angle;
+
+    return angle;
 }
 
 
