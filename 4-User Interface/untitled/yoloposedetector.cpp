@@ -1,7 +1,8 @@
 #include "yoloposedetector.h"
-
+#include "./ui_mainwindow.h"
 #include <cmath>
 #include <algorithm>
+
 
 bool YOLOPoseDetector::loadModel(const std::string& modelPath)
 {
@@ -243,11 +244,8 @@ void YOLOPoseDetector::drawResults(
         if (detection.keypoints.size() < 2)
             continue;
 
-        cv::Point2f p1 =
-            detection.keypoints[0].point;
-
-        cv::Point2f p2 =
-            detection.keypoints[1].point;
+        cv::Point2f p1 = detection.keypoints[0].point;
+        cv::Point2f p2 = detection.keypoints[1].point;
 
         // Class 0 = Wire
         if (detection.classId == 0)
@@ -280,7 +278,7 @@ void YOLOPoseDetector::drawResults(
     if (wireFound && axisFound)
     {
         double angle = calculateAngle(wire1, wire2, axis1, axis2);
-        std::string text = "Angle: " + std::to_string(angle).substr(0, 5) + " deg";
-        cv::putText(frame, text, cv::Point(30, 50), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(255, 255, 255), 2);
-    }
+       }
 }
+
+

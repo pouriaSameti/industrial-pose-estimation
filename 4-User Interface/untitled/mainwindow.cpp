@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Worker -> GUI
     connect(cameraWorker, &CameraWorker::frameReady, this, &MainWindow::displayFrame);
     connect(cameraWorker, &CameraWorker::statusChanged, this, &MainWindow::setCameraStatus);
-    // connect(cameraWorker, &CameraWorker::angleReady, this, &MainWindow::updateAngle);
+    connect(cameraWorker, &CameraWorker::angleReady, this, &MainWindow::updateAngle);
 
     // Connect button
     connect(ui->connectCameraButton, &QPushButton::clicked, this, &MainWindow::connectCamera);
@@ -108,5 +108,11 @@ void MainWindow::setCameraStatus(bool connected)
 
         ui->cameraStatusText->setText(" Disconnected");
         cameraConnectionStatus = false;
+        ui->degreeLabel->setText("0");
     }
+}
+
+void MainWindow::updateAngle(double angle)
+{
+    ui->degreeLabel->setText(QString::number(angle));
 }

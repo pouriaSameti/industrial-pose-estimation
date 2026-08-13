@@ -48,7 +48,7 @@ void CameraWorker::startCamera(const QString& cameraIP)
     running = true;
     emit statusChanged(true);
 
-    frameTimer->start(33); // ~30 fps display loop
+    frameTimer->start(10); // ~30 fps display loop
 }
 
 void CameraWorker::stopCamera()

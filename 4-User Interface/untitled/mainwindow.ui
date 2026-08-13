@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>891</width>
+    <width>893</width>
     <height>747</height>
    </rect>
   </property>
@@ -206,13 +206,74 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>871</width>
+       <width>601</width>
        <height>471</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
+    </widget>
+    <widget class="QFrame" name="degreeFrame">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>10</y>
+       <width>241</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#degreeFrame {
+	 border: 1px solid #d5d6d2;
+	background-color: white;
+	border-radius: 8px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="labInfoLabel2_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>211</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Degree</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="degreeLabel">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>50</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="statusFrame">
@@ -252,7 +313,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Connection Status</string>
+      <string>Camera Status</string>
      </property>
     </widget>
     <widget class="QFrame" name="cameraStatusFrame">
@@ -307,7 +368,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>891</width>
+     <width>893</width>
      <height>22</height>
     </rect>
    </property>
