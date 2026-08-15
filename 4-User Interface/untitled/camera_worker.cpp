@@ -16,11 +16,7 @@ CameraWorker::CameraWorker(QObject *parent)
 
     frameTimer = new QTimer(this);
     connect(frameTimer, &QTimer::timeout, this, &CameraWorker::processFrame);
-
-    // Delivered on this object's thread (worker thread), so no locking needed
-    // when reading/writing latestDetections from processFrame().
-    connect(&inferenceWatcher, &QFutureWatcher<std::vector<Detection>>::finished,
-            this, &CameraWorker::onInferenceFinished);
+    connect(&inferenceWatcher, &QFutureWatcher<std::vector<Detection>>::finished, this, &CameraWorker::onInferenceFinished);
 }
 
 CameraWorker::~CameraWorker()
@@ -41,14 +37,11 @@ void CameraWorker::startCamera(const QString& cameraIP)
         return;
     }
 
-    // Keep the capture buffer as small as possible so we don't
-    // read stale frames when inference falls behind. (Backend-dependent.)
-    camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
 
+    camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
     running = true;
     emit statusChanged(true);
-
-    frameTimer->start(10); // ~30 fps display loop
+    frameTimer->start(10);
 }
 
 void CameraWorker::stopCamera()
@@ -78,9 +71,6 @@ void CameraWorker::processFrame()
 
     emit statusChanged(true);
 
-    // Kick off inference asynchronously if the previous run has finished.
-    // We deliberately DROP frames for inference purposes while busy —
-    // display keeps going at full speed regardless.
     if (!inferenceBusy)
     {
         inferenceBusy = true;
@@ -92,10 +82,8 @@ void CameraWorker::processFrame()
         inferenceWatcher.setFuture(future);
     }
 
-    // Draw the most recent known detections (may lag by a frame or two —
-    // that's fine, it keeps the video itself smooth).
-    detector.drawResults(frame, latestDetections);
 
+    detector.drawResults(frame, latestDetections);
     cv::cvtColor(frame, frame, cv::COLOR_BGR2RGB);
     QImage image(frame.data, frame.cols, frame.rows, static_cast<int>(frame.step), QImage::Format_RGB888);
     emit frameReady(image.copy());

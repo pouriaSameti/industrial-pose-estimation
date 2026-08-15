@@ -157,7 +157,6 @@ std::vector<Detection> YOLOPoseDetector::detect(const cv::Mat& frame)
         // --------------------------------------------------
         // Bounding box in model coordinates
         // --------------------------------------------------
-
         float x = cx - width / 2.0f;
         float y = cy - height / 2.0f;
 
@@ -174,7 +173,6 @@ std::vector<Detection> YOLOPoseDetector::detect(const cv::Mat& frame)
         // --------------------------------------------------
         // Keypoints
         // --------------------------------------------------
-
         std::vector<Keypoint> keypoints;
 
         for (int k = 0; k < numKeypoints; ++k)
@@ -202,14 +200,12 @@ std::vector<Detection> YOLOPoseDetector::detect(const cv::Mat& frame)
     // --------------------------------------------------
     // 5. Non-Maximum Suppression
     // --------------------------------------------------
-
     std::vector<int> indices;
     cv::dnn::NMSBoxes(boxes, scores, confidenceThreshold, 0.45f, indices);
 
     // --------------------------------------------------
     // 6. Create final detections
     // --------------------------------------------------
-
     for (int index : indices)
     {
         Detection detection;

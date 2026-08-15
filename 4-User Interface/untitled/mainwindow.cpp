@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->connectCameraButton->setCursor(Qt::PointingHandCursor);
+    ui->cameraLabel->setPixmap(QPixmap(":/icons/camera.png").scaled(
+        ui->cameraLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     setCameraStatus(false);
 
     // Create worker thread
@@ -110,6 +112,8 @@ void MainWindow::setCameraStatus(bool connected)
         cameraConnectionStatus = false;
         ui->degreeLabel->setText("0");
         ui->deviationLabel->setText("None");
+        ui->cameraLabel->setPixmap(QPixmap(":/icons/camera.png").scaled(
+                ui->cameraLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 }
 
