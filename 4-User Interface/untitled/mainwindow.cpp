@@ -117,9 +117,9 @@ void MainWindow::setCameraStatus(bool connected)
     }
 }
 
-void MainWindow::updateAngle(double angle)
+
+void MainWindow::updateAngle(double angle, const QString& direction)
 {
-    QString direction = (angle >= 0) ? "Right" : "Left";
     ui->deviationLabel->setText(direction);
-    ui->degreeLabel->setText(QString::number(std::abs(angle), 'f', 1) + "° " + direction);
+    ui->degreeLabel->setText(QString::number(angle, 'f', 1));
 }

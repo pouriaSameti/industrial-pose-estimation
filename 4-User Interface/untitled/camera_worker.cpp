@@ -69,6 +69,8 @@ void CameraWorker::processFrame()
         return;
     }
 
+    frameWidth = frame.cols;
+
     emit statusChanged(true);
 
     if (!inferenceBusy)
@@ -107,7 +109,22 @@ void CameraWorker::onInferenceFinished()
 
     if (wireFound && axisFound)
     {
-        double angle = YOLOPoseDetector::calculateSignedAngle(wire1, wire2, axis1, axis2);
-        emit angleReady(angle);
+        double angle = YOLOPoseDetector::calculateAngle(wire1, wire2, axis1, axis2);
+
+        double dx = wire2.x - wire1.x;
+        double dy = wire2.y - wire1.y;
+
+        QString direction;
+        if (std::abs(dx) < 1e-6)
+        {
+            direction = "Direct";
+        }
+        else
+        {
+            double slope = dy / dx;
+            direction = (slope > 0) ? "Left" : "Right";
+        }
+
+        emit angleReady(angle, direction);
     }
 }

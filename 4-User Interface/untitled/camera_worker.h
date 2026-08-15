@@ -26,11 +26,13 @@ public slots:
 signals:
     void frameReady(const QImage& image);
     void statusChanged(bool connected);
-    void angleReady(double angle);
+    void angleReady(double angle, const QString& direction);
 
 private:
     cv::VideoCapture camera;
     YOLOPoseDetector detector;
+
+    int frameWidth = 0;
 
     QTimer* frameTimer = nullptr;
     bool running = false;
@@ -38,7 +40,7 @@ private:
     // async inference bookkeeping
     QFutureWatcher<std::vector<Detection>> inferenceWatcher;
     bool inferenceBusy = false;
-    std::vector<Detection> latestDetections;   // last known results, used for overlay
+    std::vector<Detection> latestDetections;
 };
 
 #endif // CAMERA_WORKER_H
