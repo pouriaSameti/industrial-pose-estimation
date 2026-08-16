@@ -227,7 +227,7 @@
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>370</y>
+       <y>190</y>
        <width>241</width>
        <height>101</height>
       </rect>
@@ -256,7 +256,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>16</pointsize>
         <bold>true</bold>
        </font>
       </property>
@@ -267,17 +267,22 @@
      <widget class="QLabel" name="degreeLabel">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>0</x>
         <y>50</y>
-        <width>31</width>
+        <width>241</width>
         <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>14</pointsize>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel#degreeLabel {
+	qproperty-alignment: AlignCenter;
+}</string>
       </property>
       <property name="text">
        <string>0</string>
@@ -288,7 +293,7 @@
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>170</y>
+       <y>370</y>
        <width>241</width>
        <height>101</height>
       </rect>
@@ -317,7 +322,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>16</pointsize>
         <bold>true</bold>
        </font>
       </property>
@@ -328,17 +333,22 @@
      <widget class="QLabel" name="deviationLabel">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>0</x>
         <y>50</y>
-        <width>61</width>
+        <width>241</width>
         <height>31</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>14</pointsize>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel#deviationLabel {
+	qproperty-alignment: AlignCenter;
+}</string>
       </property>
       <property name="text">
        <string>None</string>
@@ -351,7 +361,7 @@
        <x>8</x>
        <y>10</y>
        <width>671</width>
-       <height>459</height>
+       <height>461</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -368,6 +378,72 @@
      <property name="pixmap">
       <pixmap resource="resources.qrc">:/icons/camera.png</pixmap>
      </property>
+    </widget>
+    <widget class="QFrame" name="wireFrame">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>10</y>
+       <width>241</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#wireFrame {
+	 border: 1px solid #d5d6d2;
+	background-color: white;
+	border-radius: 8px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="labInfoLabel2_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>211</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Wire Detection</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="wireStatusLabel">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>50</y>
+        <width>241</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel#wireStatusLabel {
+	qproperty-alignment: AlignCenter;
+}</string>
+      </property>
+      <property name="text">
+       <string>None</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QFrame" name="statusFrame">

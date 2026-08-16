@@ -27,6 +27,7 @@ signals:
     void frameReady(const QImage& image);
     void statusChanged(bool connected);
     void angleReady(double angle, const QString& direction);
+    void wireDetectionChanged(bool detected);
 
 private:
     cv::VideoCapture camera;

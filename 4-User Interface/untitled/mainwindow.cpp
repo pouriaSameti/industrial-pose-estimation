@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->disconnectCameraButton, &QPushButton::clicked, this, &MainWindow::disconnectCamera);
     connect(cameraWorker, &CameraWorker::frameReady, this, &MainWindow::displayFrame);
     connect(cameraWorker, &CameraWorker::statusChanged, this, &MainWindow::setCameraStatus);
+    connect(cameraWorker, &CameraWorker::wireDetectionChanged, this, &MainWindow::updateWireStatus);
     connect(cameraWorker, &CameraWorker::angleReady, this, &MainWindow::updateAngle);
 
     // Connect button
@@ -159,6 +160,7 @@ void MainWindow::setCameraStatus(bool connected)
         ui->deviationLabel->setText("None");
         ui->cameraLabel->setPixmap(QPixmap(":/icons/camera.png"));
         ui->sourceLabel->setText(" None");
+        ui->wireStatusLabel->setText("None");
     }
 }
 
@@ -167,4 +169,13 @@ void MainWindow::updateAngle(double angle, const QString& direction)
 {
     ui->deviationLabel->setText(direction);
     ui->degreeLabel->setText(QString::number(angle, 'f', 1));
+}
+
+
+void MainWindow::updateWireStatus(bool detected)
+{
+    if (detected)
+        ui->wireStatusLabel->setText("Detected");
+    else
+        ui->wireStatusLabel->setText("Not Detected");
 }
