@@ -29,7 +29,7 @@ private slots:
     void displayFrame(const QImage &image);
     void updateAngle(double angle, bool isLeft);
     void setCameraStatus(bool connected);
-    void updateWireStatus(bool detected);
+    void setWireStatus(bool wireDetected);
 
 private:
     Ui::MainWindow *ui;

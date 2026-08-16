@@ -120,9 +120,11 @@ void CameraWorker::onInferenceFinished()
     {
         if (d.keypoints.size() < 2) continue;
 
-        if (d.classId == 0) { wire1 = d.keypoints[0].point; wire2 = d.keypoints[1].point; wireFound = true; }
-        else if (d.classId == 1) { axis1 = d.keypoints[0].point; axis2 = d.keypoints[1].point; axisFound = true; }
+        if (d.classId == 0) { wire1 = d.keypoints[0].point; wire2 = d.keypoints[1].point; axisFound = true; }
+        else if (d.classId == 1) { axis1 = d.keypoints[0].point; axis2 = d.keypoints[1].point; wireFound = true; }
     }
+
+    emit wireStatusChanged(wireFound);
 
     if (wireFound && axisFound)
     {
