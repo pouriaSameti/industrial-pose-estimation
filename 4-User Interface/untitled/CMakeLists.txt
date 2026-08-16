@@ -54,6 +54,12 @@ target_link_libraries(untitled PRIVATE
     ${OpenCV_LIBS}
 )
 
+add_custom_command(TARGET untitled POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_SOURCE_DIR}/models"
+    "$<TARGET_FILE_DIR:untitled>/models"
+)
+
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

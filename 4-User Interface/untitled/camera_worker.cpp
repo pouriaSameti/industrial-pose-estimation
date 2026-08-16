@@ -7,7 +7,7 @@
 CameraWorker::CameraWorker(QObject *parent)
     : QObject(parent)
 {
-    QString modelPath = "D:/Computer Vision/Projects/industrial-pose-estimation/4-User Interface/untitled/models/best.onnx";
+    QString modelPath = QCoreApplication::applicationDirPath() + "/models/best.onnx";
 
     if (!detector.loadModel(modelPath.toStdString()))
         qDebug() << "ERROR: Cannot load YOLO model";
