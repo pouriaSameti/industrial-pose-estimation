@@ -201,25 +201,6 @@
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLabel" name="cameraLabel">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>681</width>
-       <height>481</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="resources.qrc">:/icons/camera.png</pixmap>
-     </property>
-    </widget>
     <widget class="QFrame" name="degreeFrame">
      <property name="geometry">
       <rect>
@@ -341,6 +322,30 @@
        <string>None</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QLabel" name="cameraLabel">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>10</y>
+       <width>671</width>
+       <height>459</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel#cameraLabel {
+	border: 1px solid #d5d6d2;
+	background-color: white;
+	border-radius: 8px;
+	qproperty-alignment: AlignCenter;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="resources.qrc">:/icons/camera.png</pixmap>
+     </property>
     </widget>
    </widget>
    <widget class="QFrame" name="statusFrame">
