@@ -26,7 +26,6 @@ public:
     bool loadModel(const std::string& modelPath);
     std::vector<Detection> detect(const cv::Mat& frame);
     void drawResults(cv::Mat& frame, const std::vector<Detection>& detections);
-    static double calculateAngle(const cv::Point2f& p1, const cv::Point2f& p2, const cv::Point2f& p3, const cv::Point2f& p4);
     static double calculateSignedAngle(const cv::Point2f& p1, const cv::Point2f& p2, const cv::Point2f& p3, const cv::Point2f& p4);
 
 private:

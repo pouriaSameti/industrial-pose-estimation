@@ -11,9 +11,7 @@ bool YOLOPoseDetector::loadModel(const std::string& modelPath)
         net = cv::dnn::readNetFromONNX(modelPath);
 
         if (net.empty())
-        {
             return false;
-        }
 
         // CPU for now
         net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
@@ -26,31 +24,6 @@ bool YOLOPoseDetector::loadModel(const std::string& modelPath)
         return false;
     }
 }
-
-double YOLOPoseDetector::calculateAngle(
-    const cv::Point2f& p1,
-    const cv::Point2f& p2,
-    const cv::Point2f& p3,
-    const cv::Point2f& p4)
-{
-    cv::Point2f v1 = p2 - p1;
-    cv::Point2f v2 = p4 - p3;
-
-    double norm1 = cv::norm(v1);
-    double norm2 = cv::norm(v2);
-
-    if (norm1 == 0.0 || norm2 == 0.0)
-        return 0.0;
-
-    v1 /= norm1;
-    v2 /= norm2;
-
-    double cosine = v1.dot(v2);
-    cosine = std::clamp(cosine, -1.0, 1.0);
-    double angle = std::acos(cosine);
-    return angle * 180.0 / CV_PI;
-}
-
 
 std::vector<Detection> YOLOPoseDetector::detect(const cv::Mat& frame)
 {
@@ -251,13 +224,6 @@ void YOLOPoseDetector::drawResults(
             cv::circle(frame, axis2, 6, cv::Scalar(255, 0, 0), -1);
         }
     }
-
-    // --------------------------------------------------
-    // Calculate angle
-    // --------------------------------------------------
-    if (wireFound && axisFound)
-        double angle = calculateAngle(wire1, wire2, axis1, axis2);
-
 }
 
 

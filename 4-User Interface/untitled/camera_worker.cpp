@@ -93,7 +93,7 @@ void CameraWorker::processFrame()
     if (!inferenceBusy)
     {
         inferenceBusy = true;
-        cv::Mat frameForInference = frame.clone(); // detect() runs on another thread
+        cv::Mat frameForInference = frame.clone();
         QFuture<std::vector<Detection>> future = QtConcurrent::run(
             [this, frameForInference]() {
                 return detector.detect(frameForInference);

@@ -166,7 +166,7 @@ void MainWindow::updateAngle(double angle, bool isLeft)
 {
     QString direction = isLeft ? "Left" : "Right";
     ui->deviationLabel->setText(direction);
-    ui->degreeLabel->setText(QString::number(std::abs(angle), 'f', 1) + "° " + direction);
+    ui->degreeLabel->setText(QString::number(std::abs(angle), 'f', 1));
 }
 
 void MainWindow::updateWireStatus(bool detected)
