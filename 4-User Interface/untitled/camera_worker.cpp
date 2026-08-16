@@ -24,11 +24,29 @@ CameraWorker::~CameraWorker()
     stopCamera();
 }
 
+
 void CameraWorker::startCamera(const QString& cameraIP)
 {
     qDebug() << "Opening camera:" << cameraIP;
 
-    camera.open(cameraIP.toStdString(), cv::CAP_FFMPEG);
+    bool isDeviceIndex = false;
+    int deviceIndex = cameraIP.toInt(&isDeviceIndex);
+
+    if (isDeviceIndex)
+    {
+        // Plain number (e.g. "0") -> local webcam
+#ifdef Q_OS_WIN
+        camera.open(deviceIndex, cv::CAP_DSHOW);
+#else
+        camera.open(deviceIndex, cv::CAP_ANY);
+#endif
+    }
+    else
+    {
+        // Anything else -> remote stream URL
+        camera.open(cameraIP.toStdString(), cv::CAP_FFMPEG);
+    }
+
     if (!camera.isOpened())
     {
         qDebug() << "Cannot open camera";
@@ -37,8 +55,8 @@ void CameraWorker::startCamera(const QString& cameraIP)
         return;
     }
 
-
     camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
+
     running = true;
     emit statusChanged(true);
     frameTimer->start(10);

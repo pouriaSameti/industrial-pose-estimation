@@ -25,6 +25,7 @@ public:
 
 private slots:
     void connectCamera();
+    void disconnectCamera();
     void displayFrame(const QImage &image);
     void updateAngle(double angle, const QString& direction);
     void setCameraStatus(bool connected);

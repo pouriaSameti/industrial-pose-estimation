@@ -20,8 +20,8 @@ public:
 public slots:
     void startCamera(const QString& cameraIP);
     void stopCamera();
-    void processFrame();          // capture + display, runs every tick
-    void onInferenceFinished();   // called when async detect() completes
+    void processFrame();
+    void onInferenceFinished();
 
 signals:
     void frameReady(const QImage& image);

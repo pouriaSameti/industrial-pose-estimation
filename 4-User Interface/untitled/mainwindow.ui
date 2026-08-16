@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>963</width>
-    <height>756</height>
+    <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,7 +104,7 @@
       <x>10</x>
       <y>110</y>
       <width>681</width>
-      <height>91</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -142,9 +142,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>40</y>
-       <width>571</width>
-       <height>41</height>
+       <y>50</y>
+       <width>661</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -160,10 +160,10 @@
     <widget class="QPushButton" name="connectCameraButton">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>40</y>
-       <width>75</width>
-       <height>41</height>
+       <x>190</x>
+       <y>90</y>
+       <width>141</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -176,7 +176,29 @@
 }</string>
      </property>
      <property name="text">
-      <string>Apply</string>
+      <string>Connect</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="disconnectCameraButton">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>90</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#disconnectCameraButton {
+    background-color: red;
+    color: white;
+    border: none;
+	border-radius: 8px;
+	font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>Disconnect</string>
      </property>
     </widget>
    </widget>
@@ -184,7 +206,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>220</y>
+      <y>250</y>
       <width>941</width>
       <height>481</height>
      </rect>
@@ -205,7 +227,7 @@
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>10</y>
+       <y>370</y>
        <width>241</width>
        <height>101</height>
       </rect>
@@ -266,7 +288,7 @@
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>150</y>
+       <y>170</y>
        <width>241</width>
        <height>101</height>
       </rect>
@@ -354,7 +376,7 @@
       <x>700</x>
       <y>110</y>
       <width>251</width>
-      <height>91</height>
+      <height>131</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -385,53 +407,56 @@
       </font>
      </property>
      <property name="text">
-      <string>Camera Status</string>
+      <string>Status</string>
      </property>
     </widget>
-    <widget class="QFrame" name="cameraStatusFrame">
+    <widget class="QLabel" name="cameraStatusText">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>40</y>
-       <width>211</width>
-       <height>41</height>
+       <y>90</y>
+       <width>231</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QFrame#cameraStatusFrame {
-    border-radius: 20px;
-}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Raised</enum>
-     </property>
-     <widget class="QLabel" name="cameraStatusText">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>191</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel#cameraStatusText {
+      <string notr="true">QLabel#cameraStatusText{
     color: #f03d22;
     font-family: &quot;Segoe UI&quot;;
     font-size: 10pt;
     font-weight: 600;
 
 	background-color: #edc6c0;
-    border-radius: 20px;
+    border-radius: 8px;
 }</string>
-      </property>
-      <property name="text">
-       <string> Disconnected</string>
-      </property>
-     </widget>
+     </property>
+     <property name="text">
+      <string> Disconnected</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="sourceLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel#sourceLabel{
+    color: #f03d22;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 10pt;
+    font-weight: 600;
+
+	background-color: #edc6c0;
+    border-radius: 8px;
+}</string>
+     </property>
+     <property name="text">
+      <string> None</string>
+     </property>
     </widget>
    </widget>
   </widget>
