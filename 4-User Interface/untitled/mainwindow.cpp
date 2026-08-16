@@ -6,6 +6,7 @@
 #include <QImage>
 #include <QPixmap>
 #include <QMetaObject>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -56,13 +57,12 @@ void MainWindow::connectCamera()
 
     if (cameraIP.isEmpty())
     {
-        qDebug() << "Camera address is empty";
+        QMessageBox::warning(this, "Error", "Camera address is empty");
         setCameraStatus(false);
         return;
     }
 
-    qDebug() << "Connecting to camera:"
-             << cameraIP;
+    qDebug() << "Connecting to camera:" << cameraIP;
 
 
     bool isDeviceIndex = false;

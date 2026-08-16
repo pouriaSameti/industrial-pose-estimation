@@ -205,7 +205,6 @@ void YOLOPoseDetector::drawResults(
         {
             wire1 = p1;
             wire2 = p2;
-            wireFound = true;
 
             cv::line(frame, wire1, wire2, cv::Scalar(0, 255, 0), 3);
             cv::circle(frame, wire1, 6, cv::Scalar(0, 255, 0), -1);
@@ -217,7 +216,6 @@ void YOLOPoseDetector::drawResults(
         {
             axis1 = p1;
             axis2 = p2;
-            axisFound = true;
 
             cv::line(frame, axis1, axis2, cv::Scalar(255, 0, 0), 3);
             cv::circle(frame, axis1, 6, cv::Scalar(255, 0, 0), -1);
