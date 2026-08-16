@@ -26,7 +26,7 @@ public slots:
 signals:
     void frameReady(const QImage& image);
     void statusChanged(bool connected);
-    void angleReady(double angle, const QString& direction);
+    void angleReady(double angle, bool isLeft);
     void wireDetectionChanged(bool detected);
 
 private:

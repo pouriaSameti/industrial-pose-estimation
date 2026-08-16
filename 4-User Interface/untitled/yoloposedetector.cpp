@@ -93,22 +93,6 @@ std::vector<Detection> YOLOPoseDetector::detect(const cv::Mat& frame)
 
     cv::Mat output = outputs[0];
 
-    // YOLO pose output:
-    //
-    // [1, 4 + number_of_classes + 3 * number_of_keypoints, N]
-    //
-    // Your model:
-    //
-    // 4 box values
-    // 2 classes
-    // 2 keypoints × 3 values
-    //
-    // = 12 values
-    //
-    // So we expect approximately:
-    //
-    // [1, 12, N]
-
     int channels = output.size[1];
     int numCandidates = output.size[2];
 

@@ -27,7 +27,7 @@ private slots:
     void connectCamera();
     void disconnectCamera();
     void displayFrame(const QImage &image);
-    void updateAngle(double angle, const QString& direction);
+    void updateAngle(double angle, bool isLeft);
     void setCameraStatus(bool connected);
     void updateWireStatus(bool detected);
 

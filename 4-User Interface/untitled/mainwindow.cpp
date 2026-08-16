@@ -30,9 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(cameraWorker, &CameraWorker::wireDetectionChanged, this, &MainWindow::updateWireStatus);
     connect(cameraWorker, &CameraWorker::angleReady, this, &MainWindow::updateAngle);
 
-    // Connect button
-    connect(ui->connectCameraButton, &QPushButton::clicked, this, &MainWindow::connectCamera);
-
     // Start worker thread
     cameraThread->start();
 }
@@ -165,12 +162,12 @@ void MainWindow::setCameraStatus(bool connected)
 }
 
 
-void MainWindow::updateAngle(double angle, const QString& direction)
+void MainWindow::updateAngle(double angle, bool isLeft)
 {
+    QString direction = isLeft ? "Left" : "Right";
     ui->deviationLabel->setText(direction);
-    ui->degreeLabel->setText(QString::number(angle, 'f', 1));
+    ui->degreeLabel->setText(QString::number(std::abs(angle), 'f', 1) + "° " + direction);
 }
-
 
 void MainWindow::updateWireStatus(bool detected)
 {

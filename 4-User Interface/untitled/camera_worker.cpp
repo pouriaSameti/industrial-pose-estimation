@@ -29,12 +29,14 @@ void CameraWorker::startCamera(const QString& cameraIP)
 {
     qDebug() << "Opening camera:" << cameraIP;
 
+    if (camera.isOpened())
+        camera.release();
+
     bool isDeviceIndex = false;
     int deviceIndex = cameraIP.toInt(&isDeviceIndex);
 
     if (isDeviceIndex)
     {
-        // Plain number (e.g. "0") -> local webcam
 #ifdef Q_OS_WIN
         camera.open(deviceIndex, cv::CAP_DSHOW);
 #else
@@ -43,8 +45,7 @@ void CameraWorker::startCamera(const QString& cameraIP)
     }
     else
     {
-        // Anything else -> remote stream URL
-        camera.open(cameraIP.toStdString(), cv::CAP_FFMPEG);
+        camera.open(cameraIP.toStdString());
     }
 
     if (!camera.isOpened())
@@ -56,7 +57,6 @@ void CameraWorker::startCamera(const QString& cameraIP)
     }
 
     camera.set(cv::CAP_PROP_BUFFERSIZE, 1);
-
     running = true;
     emit statusChanged(true);
     frameTimer->start(10);
@@ -88,7 +88,6 @@ void CameraWorker::processFrame()
     }
 
     frameWidth = frame.cols;
-
     emit statusChanged(true);
 
     if (!inferenceBusy)
@@ -125,27 +124,13 @@ void CameraWorker::onInferenceFinished()
         else if (d.classId == 1) { axis1 = d.keypoints[0].point; axis2 = d.keypoints[1].point; axisFound = true; }
     }
 
-
-    emit wireDetectionChanged(wireFound);
-
     if (wireFound && axisFound)
     {
-        double angle = YOLOPoseDetector::calculateAngle(wire1, wire2, axis1, axis2);
+        double angle = YOLOPoseDetector::calculateSignedAngle(wire1, wire2, axis1, axis2);
 
-        double dx = wire2.x - wire1.x;
-        double dy = wire2.y - wire1.y;
+        double wireMidX = (axis1.x + axis2.x) / 2.0;
+        bool isLeft = wireMidX < (frameWidth / 2.0);
 
-        QString direction;
-        if (std::abs(dx) < 1e-6)
-        {
-            direction = "Direct";
-        }
-        else
-        {
-            double slope = dy / dx;
-            direction = (slope > 0) ? "Left" : "Right";
-        }
-
-        emit angleReady(angle, direction);
+        emit angleReady(angle, isLeft);
     }
 }
