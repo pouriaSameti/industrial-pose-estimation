@@ -7,6 +7,7 @@
 #include <QPixmap>
 #include <QMetaObject>
 #include <QMessageBox>
+#include <QSoundEffect>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,12 +17,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->connectCameraButton->setCursor(Qt::PointingHandCursor);
     ui->disconnectCameraButton->setCursor(Qt::PointingHandCursor);
     ui->cameraLabel->setPixmap(QPixmap(":/icons/camera.png"));
+
+
+    // Warning Sound
+    buzzerTimer = new QTimer(this);
+    buzzerTimer->setInterval(1000);
+    connect(buzzerTimer, &QTimer::timeout, this, []()
+            {
+        QSoundEffect *effect = new QSoundEffect();
+        effect->setSource(QUrl("qrc:/sounds/beep.wav"));
+        effect->setVolume(1.0);
+        effect->play();
+    });
     setCameraStatus(false);
+
 
     // Create worker thread
     cameraThread = new QThread(this);
     cameraWorker = new CameraWorker();
     cameraWorker->moveToThread(cameraThread);
+
 
     // Worker -> GUI
     connect(ui->connectCameraButton, &QPushButton::clicked, this, &MainWindow::connectCamera);
@@ -30,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(cameraWorker, &CameraWorker::statusChanged, this, &MainWindow::setCameraStatus);
     connect(cameraWorker, &CameraWorker::angleReady, this, &MainWindow::updateAngle);
     connect(cameraWorker, &CameraWorker::wireStatusChanged, this, &MainWindow::setWireStatus);
+    connect(cameraWorker, &CameraWorker::wireStatusChanged, this, &MainWindow::onWireStatusChanged);
 
     // Start worker thread
     cameraThread->start();
@@ -158,7 +174,28 @@ void MainWindow::setCameraStatus(bool connected)
         ui->cameraLabel->setPixmap(QPixmap(":/icons/camera.png"));
         ui->sourceLabel->setText(" None");
         ui->wireStatusLabel->setText("None");
+        buzzerTimer->stop();
     }
+}
+
+
+void MainWindow::onWireStatusChanged(bool wireDetected)
+{
+    if (!cameraConnectionStatus)
+    {
+        buzzerTimer->stop();
+        return;
+    }
+
+    if (wireDetected)
+        buzzerTimer->stop();
+
+    else
+        if (!buzzerTimer->isActive())
+        {
+            QApplication::beep();
+            buzzerTimer->start();
+        }
 }
 
 void MainWindow::setWireStatus(bool wireDetected)

@@ -71,6 +71,7 @@ void CameraWorker::stopCamera()
         camera.release();
 
     emit statusChanged(false);
+    emit wireStatusChanged(false);
 }
 
 void CameraWorker::processFrame()

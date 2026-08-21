@@ -3,4 +3,8 @@
         <file>icons/cpl.jpg</file>
 	<file>icons/camera.png</file>
     </qresource>
+	
+    <qresource prefix="/">
+        <file>sounds/beep.wav</file>
+    </qresource>
 </RCC>

@@ -30,6 +30,7 @@ private slots:
     void updateAngle(double angle, bool isLeft);
     void setCameraStatus(bool connected);
     void setWireStatus(bool wireDetected);
+    void onWireStatusChanged(bool wireDetected);
 
 private:
     Ui::MainWindow *ui;
@@ -39,6 +40,7 @@ private:
 
     QString cameraIP;
     QTimer *cameraTimer;
+    QTimer *buzzerTimer = nullptr;
     YOLOPoseDetector detector;
 
     bool cameraConnectionStatus = false;
